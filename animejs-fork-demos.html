@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime.js Fork - Interactive Demos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00d2ff;
+        }
+
+        .demo-area {
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-btn {
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Demo specific styles */
+        .morphing-shape {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            border-radius: 10px;
+        }
+
+        .floating-elements {
+            display: flex;
+            gap: 10px;
+        }
+
+        .floating-element {
+            width: 20px;
+            height: 20px;
+            background: #00d2ff;
+            border-radius: 50%;
+        }
+
+        .text-animation {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d2ff;
+        }
+
+        .physics-ball {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #ff4757, #c44569);
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d2ff;
+            border-radius: 50%;
+        }
+
+        .timeline-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00d2ff, #ff4757);
+            width: 0%;
+            border-radius: 5px;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <a href="animejs-fork-landing.html" class="back-link">← Back to Landing</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Interactive Demos</h1>
+            <p class="subtitle">Experience the enhanced capabilities of our anime.js fork</p>
+        </div>
+
+        <div class="demos-grid">
+            <!-- Morphing Shapes Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Morphing Shapes</h3>
+                <div class="demo-area">
+                    <div class="morphing-shape" id="morphShape"></div>
+                </div>
+                <button class="demo-btn" onclick="runMorphDemo()">Start Morphing</button>
+                <p>Advanced shape morphing with smooth transitions and custom easing.</p>
+            </div>
+
+            <!-- Floating Elements Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Staggered Animation</h3>
+                <div class="demo-area">
+                    <div class="floating-elements" id="floatingElements">
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                        <div class="floating-element"></div>
+                    </div>
+                </div>
+                <button class="demo-btn" onclick="runStaggerDemo()">Animate Elements</button>
+                <p>Staggered animations with precise timing control and wave effects.</p>
+            </div>
+
+            <!-- Text Animation Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Text Effects</h3>
+                <div class="demo-area">
+                    <div class="text-animation" id="textDemo">ANIME.JS</div>
+                </div>
+                <button class="demo-btn" onclick="runTextDemo()">Animate Text</button>
+                <p>Character-by-character text animations with multiple effects.</p>
+            </div>
+
+            <!-- Physics Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Physics Engine</h3>
+                <div class="demo-area">
+                    <div class="physics-ball" id="physicsBall"></div>
+                </div>
+                <button class="demo-btn" onclick="runPhysicsDemo()">Drop Ball</button>
+                <p>Realistic physics with spring animations and bounce effects.</p>
+            </div>
+
+            <!-- Particle System Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Particle System</h3>
+                <div class="demo-area" id="particleArea">
+                    <!-- Particles will be generated here -->
+                </div>
+                <button class="demo-btn" onclick="runParticleDemo()">Generate Particles</button>
+                <p>Dynamic particle systems with collision detection and forces.</p>
+            </div>
+
+            <!-- Timeline Demo -->
+            <div class="demo-card">
+                <h3 class="demo-title">Timeline Control</h3>
+                <div class="demo-area">
+                    <div class="timeline-bar">
+                        <div class="timeline-progress" id="timelineProgress"></div>
+                    </div>
+                </div>
+                <button class="demo-btn" onclick="runTimelineDemo()">Start Timeline</button>
+                <p>Complex animation sequences with precise timeline control.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Morphing Shapes Demo
+        function runMorphDemo() {
+            const shape = document.getElementById('morphShape');
+            
+            anime.timeline({
+                easing: 'easeInOutQuad',
+                duration: 800,
+                loop: false
+            })
+            .add({
+                targets: shape,
+                borderRadius: ['10px', '50%'],
+                rotate: '180deg',
+                scale: [1, 1.2, 1],
+                background: ['linear-gradient(45deg, #00d2ff, #ff4757)', 'linear-gradient(45deg, #ff4757, #00d2ff)']
+            })
+            .add({
+                targets: shape,
+                borderRadius: ['50%', '0%'],
+                rotate: '360deg',
+                skewX: '15deg',
+                background: ['linear-gradient(45deg, #ff4757, #00d2ff)', 'linear-gradient(45deg, #00d2ff, #ff4757)']
+            })
+            .add({
+                targets: shape,
+                borderRadius: ['0%', '10px'],
+                rotate: '0deg',
+                skewX: '0deg',
+                scale: 1
+            });
+        }
+
+        // Staggered Animation Demo
+        function runStaggerDemo() {
+            anime({
+                targets: '#floatingElements .floating-element',
+                translateY: [0, -50, 0],
+                scale: [1, 1.5, 1],
+                rotate: '360deg',
+                duration: 1000,
+                delay: anime.stagger(100),
+                easing: 'easeInOutElastic(1, .6)'
+            });
+        }
+
+        // Text Animation Demo
+        function runTextDemo() {
+            const textElement = document.getElementById('textDemo');
+            textElement.innerHTML = textElement.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+            
+            anime.timeline({
+                easing: 'easeOutExpo',
+                duration: 600
+            })
+            .add({
+                targets: '#textDemo .letter',
+                opacity: [1, 0],
+                translateY: [0, -50],
+                delay: anime.stagger(50)
+            })
+            .add({
+                targets: '#textDemo .letter',
+                opacity: [0, 1],
+                translateY: [-50, 0],
+                rotateZ: [180, 0],
+                color: ['#00d2ff', '#ff4757', '#00d2ff'],
+                delay: anime.stagger(50)
+            });
+        }
+
+        // Physics Demo
+        function runPhysicsDemo() {
+            const ball = document.getElementById('physicsBall');
+            
+            anime.timeline({
+                easing: 'easeInQuad'
+            })
+            .add({
+                targets: ball,
+                translateY: [0, 100],
+                duration: 500
+            })
+            .add({
+                targets: ball,
+                translateY: [100, -20],
+                duration: 400,
+                easing: 'easeOutBounce'
+            })
+            .add({
+                targets: ball,
+                translateY: [-20, 0],
+                duration: 300,
+                easing: 'easeOutBounce'
+            });
+        }
+
+        // Particle System Demo
+        function runParticleDemo() {
+            const area = document.getElementById('particleArea');
+            area.innerHTML = ''; // Clear existing particles
+            
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = '50%';
+                particle.style.top = '50%';
+                area.appendChild(particle);
+            }
+            
+            anime({
+                targets: '.particle',
+                translateX: function() { return anime.random(-100, 100); },
+                translateY: function() { return anime.random(-100, 100); },
+                scale: [0, 1, 0],
+                opacity: [0, 1, 0],
+                duration: 2000,
+                delay: anime.stagger(50),
+                easing: 'easeOutExpo',
+                complete: function() {
+                    area.innerHTML = '';
+                }
+            });
+        }
+
+        // Timeline Demo
+        function runTimelineDemo() {
+            const progress = document.getElementById('timelineProgress');
+            
+            anime({
+                targets: progress,
+                width: ['0%', '100%'],
+                duration: 2000,
+                easing: 'easeInOutQuad',
+                complete: function() {
+                    anime({
+                        targets: progress,
+                        width: '0%',
+                        duration: 500,
+                        easing: 'easeInQuad'
+                    });
+                }
+            });
+        }
+
+        // Initialize page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate demo cards on load
+            anime({
+                targets: '.demo-card',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                delay: anime.stagger(100),
+                duration: 800,
+                easing: 'easeOutExpo'
+            });
+
+            // Animate title
+            anime({
+                targets: '.title',
+                opacity: [0, 1],
+                translateY: [-30, 0],
+                duration: 1000,
+                easing: 'easeOutExpo'
+            });
+
+            // Animate subtitle
+            anime({
+                targets: '.subtitle',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 800,
+                delay: 300,
+                easing: 'easeOutExpo'
+            });
+        });
+    </script>
+</body>
+</html>

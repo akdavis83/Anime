@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime.js Fork - Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: #0f172a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #00d2ff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid #00d2ff;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #00d2ff;
+            color: #0f172a;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar h3 {
+            color: #00d2ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #00d2ff;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 15px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: #00d2ff;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: #ff4757;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #e2e8f0;
+        }
+
+        .highlight {
+            color: #00d2ff;
+        }
+
+        .keyword {
+            color: #ff4757;
+        }
+
+        .string {
+            color: #10b981;
+        }
+
+        .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .demo-container {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border: 1px solid #334155;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 1rem 0;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        .demo-element {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #00d2ff, #ff4757);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #334155;
+        }
+
+        .feature-card h4 {
+            color: #00d2ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-link:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="animejs-fork-landing.html" class="back-link">← Back to Landing</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Documentation</h1>
+            <p class="subtitle">Complete guide to the enhanced anime.js fork</p>
+            <div class="nav-links">
+                <a href="#getting-started" class="nav-link">Getting Started</a>
+                <a href="#api" class="nav-link">API Reference</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="animejs-fork-demos.html" class="nav-link">Live Demos</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <aside class="sidebar">
+                <h3>Quick Navigation</h3>
+                <ul>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#basic-usage">Basic Usage</a></li>
+                    <li><a href="#3d-transforms">3D Transforms</a></li>
+                    <li><a href="#timeline">Timeline</a></li>
+                    <li><a href="#stagger">Stagger</a></li>
+                    <li><a href="#easing">Easing</a></li>
+                    <li><a href="#callbacks">Callbacks</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <section id="getting-started" class="section">
+                    <h2>Getting Started</h2>
+                    
+                    <h3 id="installation">Installation</h3>
+                    <p>Install the enhanced anime.js fork via CDN or npm:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="comment">// Via CDN</span>
+<span class="keyword">&lt;script</span> <span class="highlight">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/animejs-fork@latest/lib/anime.min.js"</span><span class="keyword">&gt;&lt;/script&gt;</span>
+
+<span class="comment">// Via npm</span>
+<span class="highlight">npm install</span> animejs-fork
+
+<span class="comment">// ES6 import</span>
+<span class="keyword">import</span> <span class="highlight">anime</span> <span class="keyword">from</span> <span class="string">'animejs-fork'</span>;</pre>
+                    </div>
+
+                    <h3 id="basic-usage">Basic Usage</h3>
+                    <p>Create your first animation with enhanced precision:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="highlight">anime</span>({
+  <span class="highlight">targets</span>: <span class="string">'.my-element'</span>,
+  <span class="highlight">translateX</span>: <span class="string">250</span>,
+  <span class="highlight">rotate</span>: <span class="string">'1turn'</span>,
+  <span class="highlight">backgroundColor</span>: <span class="string">'#ff4757'</span>,
+  <span class="highlight">duration</span>: <span class="string">800</span>,
+  <span class="highlight">easing</span>: <span class="string">'easeInOutQuad'</span>
+});</pre>
+                    </div>
+
+                    <div class="demo-container">
+                        <div class="demo-element" id="basicDemo"></div>
+                        <button class="demo-button" onclick="runBasicDemo()">Run Basic Animation</button>
+                    </div>
+                </section>
+
+                <section id="enhanced-features" class="section">
+                    <h2>Enhanced Features</h2>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>🚀 Performance Boost</h4>
+                            <p>60fps animations with optimized rendering pipeline and reduced memory usage.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🎯 Precision Control</h4>
+                            <p>Frame-perfect timing with microsecond precision for professional animations.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>🎨 3D Native Support</h4>
+                            <p>Hardware-accelerated 3D transforms without additional dependencies.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4>⚡ Lightweight</h4>
+                            <p>Only 17kb gzipped - smaller than the original while offering more features.</p>
+                        </div>
+                    </div>
+
+                    <h3 id="3d-transforms">3D Transforms</h3>
+                    <p>Enhanced 3D capabilities with hardware acceleration:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="highlight">anime</span>({
+  <span class="highlight">targets</span>: <span class="string">'.cube'</span>,
+  <span class="highlight">rotateX</span>: <span class="string">'360deg'</span>,
+  <span class="highlight">rotateY</span>: <span class="string">'360deg'</span>,
+  <span class="highlight">rotateZ</span>: <span class="string">'180deg'</span>,
+  <span class="highlight">translateZ</span>: <span class="string">100</span>,
+  <span class="highlight">perspective</span>: <span class="string">1000</span>,
+  <span class="highlight">duration</span>: <span class="string">2000</span>,
+  <span class="highlight">easing</span>: <span class="string">'easeInOutCubic'</span>
+});</pre>
+                    </div>
+
+                    <h3 id="timeline">Timeline Control</h3>
+                    <p>Create complex animation sequences with precise timing:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="keyword">const</span> <span class="highlight">tl</span> = <span class="highlight">anime</span>.<span class="highlight">timeline</span>({
+  <span class="highlight">easing</span>: <span class="string">'easeOutExpo'</span>,
+  <span class="highlight">duration</span>: <span class="string">750</span>
+});
+
+<span class="highlight">tl</span>
+.<span class="highlight">add</span>({
+  <span class="highlight">targets</span>: <span class="string">'.element1'</span>,
+  <span class="highlight">translateX</span>: <span class="string">250</span>
+})
+.<span class="highlight">add</span>({
+  <span class="highlight">targets</span>: <span class="string">'.element2'</span>,
+  <span class="highlight">translateY</span>: <span class="string">-100</span>
+}, <span class="string">'-=500'</span>) <span class="comment">// Start 500ms before previous animation ends</span>
+.<span class="highlight">add</span>({
+  <span class="highlight">targets</span>: <span class="string">'.element3'</span>,
+  <span class="highlight">scale</span>: [<span class="string">0</span>, <span class="string">1</span>]
+});</pre>
+                    </div>
+
+                    <h3 id="stagger">Stagger Animations</h3>
+                    <p>Animate multiple elements with intelligent staggering:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="highlight">anime</span>({
+  <span class="highlight">targets</span>: <span class="string">'.stagger-element'</span>,
+  <span class="highlight">translateY</span>: [<span class="string">-40</span>, <span class="string">0</span>],
+  <span class="highlight">opacity</span>: [<span class="string">0</span>, <span class="string">1</span>],
+  <span class="highlight">delay</span>: <span class="highlight">anime</span>.<span class="highlight">stagger</span>(<span class="string">100</span>, {
+    <span class="highlight">grid</span>: [<span class="string">3</span>, <span class="string">3</span>],
+    <span class="highlight">from</span>: <span class="string">'center'</span>
+  }),
+  <span class="highlight">duration</span>: <span class="string">600</span>
+});</pre>
+                    </div>
+                </section>
+
+                <section id="api" class="section">
+                    <h2>API Reference</h2>
+                    
+                    <h3>Core Methods</h3>
+                    <div class="code-block">
+                        <pre><span class="comment">// Basic animation</span>
+<span class="highlight">anime</span>(<span class="highlight">options</span>)
+
+<span class="comment">// Timeline</span>
+<span class="highlight">anime</span>.<span class="highlight">timeline</span>(<span class="highlight">options</span>)
+
+<span class="comment">// Stagger utility</span>
+<span class="highlight">anime</span>.<span class="highlight">stagger</span>(<span class="highlight">value</span>, <span class="highlight">options</span>)
+
+<span class="comment">// Random utility</span>
+<span class="highlight">anime</span>.<span class="highlight">random</span>(<span class="highlight">min</span>, <span class="highlight">max</span>)
+
+<span class="comment">// Path utilities (enhanced)</span>
+<span class="highlight">anime</span>.<span class="highlight">path</span>(<span class="highlight">pathElement</span>)
+<span class="highlight">anime</span>.<span class="highlight">setDashoffset</span>(<span class="highlight">pathElement</span>)</pre>
+                    </div>
+
+                    <h3 id="easing">Enhanced Easing Functions</h3>
+                    <p>Extended easing library with physics-based animations:</p>
+                    
+                    <div class="code-block">
+                        <pre><span class="comment">// Built-in easing</span>
+<span class="string">'linear'</span>, <span class="string">'easeInQuad'</span>, <span class="string">'easeOutQuad'</span>, <span class="string">'easeInOutQuad'</span>
+<span class="string">'easeInCubic'</span>, <span class="string">'easeOutCubic'</span>, <span class="string">'easeInOutCubic'</span>
+<span class="string">'easeInQuart'</span>, <span class="string">'easeOutQuart'</span>, <span class="string">'easeInOutQuart'</span>
+
+<span class="comment">// Physics-based (new)</span>
+<span class="string">'spring(mass, stiffness, damping, velocity)'</span>
+<span class="string">'bounce(amplitude, period)'</span>
+<span class="string">'elastic(amplitude, period)'</span>
+
+<span class="comment">// Custom cubic-bezier</span>
+<span class="string">'cubicBezier(x1, y1, x2, y2)'</span></pre>
+                    </div>
+
+                    <h3 id="callbacks">Callbacks & Events</h3>
+                    <div class="code-block">
+                        <pre><span class="highlight">anime</span>({
+  <span class="highlight">targets</span>: <span class="string">'.element'</span>,
+  <span class="highlight">translateX</span>: <span class="string">250</span>,
+  <span class="highlight">begin</span>: <span class="keyword">function</span>(<span class="highlight">anim</span>) {
+    <span class="highlight">console</span>.<span class="highlight">log</span>(<span class="string">'Animation started'</span>);
+  },
+  <span class="highlight">update</span>: <span class="keyword">function</span>(<span class="highlight">anim</span>) {
+    <span class="highlight">console</span>.<span class="highlight">log</span>(<span class="string">'Progress:'</span>, <span class="highlight">anim</span>.<span class="highlight">progress</span>);
+  },
+  <span class="highlight">complete</span>: <span class="keyword">function</span>(<span class="highlight">anim</span>) {
+    <span class="highlight">console</span>.<span class="highlight">log</span>(<span class="string">'Animation completed'</span>);
+  }
+});</pre>
+                    </div>
+                </section>
+
+                <section id="performance" class="section">
+                    <h2>Performance Optimization</h2>
+                    
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li>Use <code>transform</code> properties for better performance</li>
+                        <li>Prefer <code>opacity</code> over <code>visibility</code></li>
+                        <li>Use <code>will-change</code> CSS property for complex animations</li>
+                        <li>Batch DOM reads and writes</li>
+                        <li>Use hardware acceleration with 3D transforms</li>
+                    </ul>
+
+                    <div class="code-block">
+                        <pre><span class="comment">// Optimized animation</span>
+<span class="highlight">anime</span>({
+  <span class="highlight">targets</span>: <span class="string">'.element'</span>,
+  <span class="highlight">translateX</span>: <span class="string">250</span>, <span class="comment">// Uses transform (GPU accelerated)</span>
+  <span class="highlight">opacity</span>: [<span class="string">0</span>, <span class="string">1</span>], <span class="comment">// Efficient opacity change</span>
+  <span class="highlight">duration</span>: <span class="string">800</span>,
+  <span class="highlight">easing</span>: <span class="string">'easeOutQuad'</span>
+});
+
+<span class="comment">// CSS optimization</span>
+<span class="keyword">.element</span> {
+  <span class="highlight">will-change</span>: <span class="string">transform, opacity</span>;
+  <span class="highlight">transform</span>: <span class="string">translateZ(0)</span>; <span class="comment">// Force hardware acceleration</span>
+}</pre>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        function runBasicDemo() {
+            anime({
+                targets: '#basicDemo',
+                translateX: [0, 200, 0],
+                rotate: '1turn',
+                backgroundColor: ['#00d2ff', '#ff4757', '#00d2ff'],
+                duration: 2000,
+                easing: 'easeInOutQuad'
+            });
+        }
+
+        // Initialize page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate sections on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [30, 0],
+                            duration: 800,
+                            easing: 'easeOutExpo'
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.opacity = '0';
+                observer.observe(section);
+            });
+
+            // Animate title
+            anime({
+                targets: '.title',
+                opacity: [0, 1],
+                translateY: [-30, 0],
+                duration: 1000,
+                easing: 'easeOutExpo'
+            });
+
+            // Animate navigation links
+            anime({
+                targets: '.nav-link',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                delay: anime.stagger(100),
+                duration: 600,
+                easing: 'easeOutExpo'
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
